@@ -1,17 +1,26 @@
+/**
+ * @module smart-link-Escrow
+ * @author Smart-Chain
+ * @version 1.0.0
+ * This module manages Orders page functionalities
+ */
+
+// Vue
 import { Component, Vue } from 'vue-property-decorator';
+import Navigation from '@/components/navigation/Navigation.vue';
+
+// Data
 import offers from "../../demo-data/offers.json"
 import states from "../../demo-data/states.json"
 
+// Utils
 import contractUtils from "../../contract/utils"
 import dataUtils from "../../demo-data/utils"
 
-import { TezosToolkit } from "@taquito/taquito"
+// Vue data store / Local storage
 import moment from "moment"
-import { namespace } from 'vuex-class'
-import Navigation from '@/components/navigation/Navigation.vue';
 
-const contract = namespace('contract')
-const Tezos = new TezosToolkit("https://edonet.smartpy.io")
+
 
 @Component({
     components: {
@@ -19,38 +28,31 @@ const Tezos = new TezosToolkit("https://edonet.smartpy.io")
     },
 })
 export default class Sales extends Vue {
+    // Display Vue booleans
+    public drawer: boolean = true;
+    public loadTable: boolean = true;
+    public error: boolean = false;
 
-    public drawer = true;
-
-    public slashing_rate = this.$store.state.contract.slashingRate
-    public loadTable = true;
-    public data = offers;
-    public states: any = states;
-    public error = false;
-    public headers = ["Product", "Seller", "State", "Total", ""];
-    public offers_period: string | null = "";
-    public purchases_period: string | null = "";
-    public commissions_temp = new Map()
-    public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
-    public dataUtils = new dataUtils();
+    // Smart contract information
+    public slashing_rate: number = this.$store.state.contract.slashingRate
     public storage: any;
 
-    getCommission(data_type: string) {
-        let commission = 0;
+    // Data
+    public data = offers;
+    public states: any = states;
 
-        // get commission; we're using a temp object to avoid querying the contract too many times
-        if (this.commissions_temp.has(data_type)) {
-            commission = this.commissions_temp.get(data_type)
-        }
-        else {
-            commission = this.contractUtils.getCommission(this.storage, data_type);
-            this.commissions_temp.set(data_type, commission)
-        }
+    // Tables display data
+    public headers: Array<String> = ["Product", "Seller", "State", "Total", ""];
+    public offers_period: string | null = "";
+    public purchases_period: string | null = "";
 
-        return commission;
+    // Utils
+    public contractUtils: contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
+    public dataUtils: dataUtils = new dataUtils();
 
-    }
-
+    /**
+     * Function that loads the data from the test data and the smart contract storage
+     */
     loadData() {
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
         this.data = this.data.filter((data) => exchanges.has(data.id))
@@ -61,18 +63,25 @@ export default class Sales extends Vue {
         })
     }
 
-
+    /**
+     * Function that prepares the data before the mount
+     */
     async beforeMount() {
         this.storage = await this.contractUtils.getContractStorage();
         this.loadData();
         this.loadTable = false;
     }
 
-    filteredEvents(type:string) {
+    /**
+    * Function that filters events depending on the selected period
+    * @param {string} type - filters data depending on the type, it can be either offer or sale
+    */
+    filteredEvents(type: string) {
         const today = moment();
         const data = this.data.filter(data => data.type === type)
-        const period = (type === 'offer')? this.offers_period:this.purchases_period
-        
+        // Filter the offers or the purches table
+        const period = (type === 'offer') ? this.offers_period : this.purchases_period
+
         if (period == "day") {
             return data.filter(data => moment(data.date).toISOString().substr(0, 10) === today.toISOString().substr(0, 10))
         }

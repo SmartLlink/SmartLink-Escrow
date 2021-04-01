@@ -1,3 +1,9 @@
+/**
+ * @module smart-link-Escrow
+ * @author Smart-Chain
+ * @version 1.0.0
+ * This module manages the utility functions for the data management
+ */
 import states from "./states.json"
 
 export default class dataUtils {

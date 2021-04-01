@@ -1,3 +1,9 @@
+/**
+ * @module smart-link-Escrow
+ * @author Smart-Chain
+ * @version 1.0.0
+ * This module allows to use Vuetify bootstrap
+ */
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 

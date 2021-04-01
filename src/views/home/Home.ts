@@ -1,3 +1,10 @@
+/**
+ * @module smart-link-Escrow
+ * @author Smart-Chain
+ * @version 1.0.0
+ * This module manages Home page functionalities
+ */
+
 // Vue
 import { Component, Vue } from 'vue-property-decorator';
 

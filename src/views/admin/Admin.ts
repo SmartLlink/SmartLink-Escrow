@@ -1,3 +1,10 @@
+/**
+ * @module smart-link-Escrow
+ * @author Smart-Chain
+ * @version 1.0.0
+ * This module manages the Admin page functionalities
+ */
+
 // Vue
 import { Component, Vue } from 'vue-property-decorator'; // enables vue
 import Navigation from "../../components/navigation/Navigation.vue" // Navigation side bar menu
