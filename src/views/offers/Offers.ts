@@ -85,6 +85,7 @@ export default class Sales extends Vue {
 
     /**
     * Function that filters events depending on the selected period
+    * @return - filtered data
     */
     filteredEvents() {
         const today = moment();

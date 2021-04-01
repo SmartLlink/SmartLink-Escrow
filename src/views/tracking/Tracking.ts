@@ -20,8 +20,6 @@ import dataUtils from "../../demo-data/utils"
 // Vue data store / Local storage
 import moment from "moment"
 
-
-
 @Component({
     components: {
         Navigation
@@ -75,6 +73,7 @@ export default class Sales extends Vue {
     /**
     * Function that filters events depending on the selected period
     * @param {string} type - filters data depending on the type, it can be either offer or sale
+    * @return - filtered data
     */
     filteredEvents(type: string) {
         const today = moment();
