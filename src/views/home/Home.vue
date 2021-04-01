@@ -14,7 +14,7 @@
                   <v-row>
                     <v-col cols="12" md="4" class="primary prerequisites">
                       <v-card-text class="white--text mt-12">
-                        <h4 class="overline">Start your journay with us!</h4>
+                        <h4 class="overline">Start your journey with us!</h4>
                         <h1 class="display-1">SmartLink demo</h1>
                         <v-divider></v-divider>
                         <h6 class="title">Prerequisites</h6>
