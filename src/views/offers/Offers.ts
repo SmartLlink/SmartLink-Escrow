@@ -24,12 +24,12 @@ const user = namespace('user')
 export default class Sales extends Vue {
 
     // Vue display booleans
-    public drawer = true;
-    public loadTable = true;
-    public error = false;
+    public drawer: boolean = true;
+    public loadTable: boolean = true;
+    public error: boolean = false;
 
     // Smart contract variables
-    public slashing_rate = this.$store.state.contract.slashingRate
+    public slashing_rate: number = this.$store.state.contract.slashingRate
     public storage: any;
 
     // Data
@@ -37,12 +37,12 @@ export default class Sales extends Vue {
     public states: any = states;
 
     // Tables display info
-    public headers = ["Product", "Seller", "Total", "", ""];
+    public headers: Array<String> = ["Product", "Seller", "Total", "", ""];
     public period: string | null = "";
 
     // Utils
-    public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
-    public dataUtils = new dataUtils();
+    public contractUtils: contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
+    public dataUtils: dataUtils = new dataUtils();
 
     // Local storage
     @user.Action
@@ -50,7 +50,7 @@ export default class Sales extends Vue {
 
     @user.Action
     public updateRemoved!: (item: string) => void
-    
+
     /**
      * Function that loads the data from the test data and the smart contract storage
      */
@@ -76,9 +76,9 @@ export default class Sales extends Vue {
         this.loadTable = false;
     }
 
-     /**
-     * Function that filters events depending on the selected period
-     */
+    /**
+    * Function that filters events depending on the selected period
+    */
     filteredEvents() {
         const today = moment();
 
@@ -97,19 +97,19 @@ export default class Sales extends Vue {
 
     }
 
-     /**
-     * Function that updates the view number after clicking "view"
-     * @param {string} id - id of the viewed item
-     */
-    updateNotification(id:string) {
-        if(!this.$store.state.user.viewed.includes(id)) this.updateViewed(id);
-    } 
-    
+    /**
+    * Function that updates the view number after clicking "view"
+    * @param {string} id - id of the viewed item
+    */
+    updateNotification(id: string) {
+        if (!this.$store.state.user.viewed.includes(id)) this.updateViewed(id);
+    }
+
     /**
      * Function that checks if the item is viewed - Helps to display the "new" chip
      * @param {string} id - id of the item to check
      */
-    isUnviewed(id:string){
+    isUnviewed(id: string) {
         return !this.$store.state.user.viewed.includes(id)
     }
 
@@ -117,8 +117,8 @@ export default class Sales extends Vue {
      * Function that removes the item of the offers list
      * @param {string} id - id of the item to remove
      */
-    removeItem(id:string){
-        if(!this.$store.state.user.removed.includes(id)) this.updateRemoved(id);
+    removeItem(id: string) {
+        if (!this.$store.state.user.removed.includes(id)) this.updateRemoved(id);
         this.loadData()
     }
 
