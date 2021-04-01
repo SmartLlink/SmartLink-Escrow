@@ -9,13 +9,8 @@ import contractUtils from "../../contract/utils" // Contract utils functions
 
 // Taquito and Beacon SDK
 import { TezosToolkit } from "@taquito/taquito" // Tezos utils
-import {
-  BeaconEvent,
-  defaultEventCallbacks,
-  NetworkType
-} from "@airgap/beacon-sdk";
 
-import { BeaconWallet } from "@taquito/beacon-wallet"; // Imports Beacon Wallet
+import { TempleWallet } from '@temple-wallet/dapp';
 
 const Tezos = new TezosToolkit("https://edonet.smartpy.io") // RPC of our choice
 
@@ -32,7 +27,6 @@ export default class Sales extends Vue {
   // Data
   public data = offers;
   public info = info;
-  //public itemsWaitingForValidation: any = {}
   public itemsWaitingForTransfer: any = {}
 
   // Utils
@@ -46,20 +40,33 @@ export default class Sales extends Vue {
   public headers = ["Item", "Buyer", "Escrowed amount", ""]
   public commissions_headers = ["Variable", "Percentage"]
   
-  // Beacon wallet instance
-  private wallet = new BeaconWallet({
-    name: "Escrow DApp",
-    eventHandlers: {
-      // Overwrite standard behavior of certain events
-      [BeaconEvent.PAIR_INIT]: {
-        handler: async (syncInfo) => {
-          // Add standard behavior back (optional)
-          await defaultEventCallbacks.PAIR_INIT(syncInfo);
-          console.log("syncInfo", syncInfo);
-        },
-      },
-    },
-  });
+  // Display data
+  public error:boolean = false;
+  public error_msg:string = "";
+  
+  // Temple Wallet initialisation
+  private wallet = new TempleWallet("SmartLink Demo DApp");
+
+  /**
+  * Function that sets up the user waller and connects it to the DApp
+  */
+  async walletSetup() {
+    // Check if Temple wallet is available
+    const available = await TempleWallet.isAvailable();
+
+    if (!available) {
+      this.error = true;
+      this.error_msg += "The Temple wallet is not available. \n"
+      console.error("The Temple wallet is not available")
+    }
+
+    // Connect to Edo2 testnet
+    await this.wallet.connect('edo2net');
+
+    // Set the wallet provider to the Temple wallet
+    Tezos.setWalletProvider(this.wallet);
+
+  }
 
   /**
     * Function called before the route mount that loads all the needed data
@@ -119,7 +126,7 @@ export default class Sales extends Vue {
     Tezos.setWalletProvider(this.wallet); // set a wallet provider
 
     // Request the permission to use a wallet
-    await this.wallet.client.requestPermissions({ network: { type: NetworkType.EDONET } })
+    await this.walletSetup()
       .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress)) // Query the contract
       // Call the desired entrypoint
       .then((contract) => contract.methods.validateSellerTransmission(

@@ -7,7 +7,6 @@ import moment from "moment"
 
 // Data
 import offers from "../../demo-data/offers.json"
-import states from "../../demo-data/states.json"
 
 // Utils
 import contractUtils from "../../contract/utils"
@@ -21,41 +20,51 @@ import dataUtils from "../../demo-data/utils"
 export default class Sales extends Vue {
     // Display data
     public drawer = true;
-    public error = false;
     public loadTable = true;
+
+    // Table and filters data
     public period: string | null = "";
     public headers = ["Product", "Seller", "Total", ""];
 
     // Smart-contract variables
     public slashing_rate = this.$store.state.contract.slashingRate
     public storage: any;
-    public commissions_temp = new Map()
 
     // Data
     public data = offers;
-    public states: any = states;
     
     // Util variables
     public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
     public dataUtils = new dataUtils();
 
+    /**
+     * Function that loads the data from the test data and the smart contract storage
+     */
     loadData() {
+        // Get the exchanges map
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
+        // Get all the sold items that are not in the exchanges map of the smart contract
         this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="sale")
-        console.log(this.data)
+
+        // Get the commission and update the data object
         this.data.map((data) => {
-            //const commission = this.getCommission(data.escrow_type)
             const commission = this.contractUtils.getCommission(this.storage, data.escrow_type)
             this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
         })
     }
 
+    /**
+     * Function that prepares the data before the mount
+     */
     async beforeMount() {
         this.storage = await this.contractUtils.getContractStorage();
         this.loadData();
         this.loadTable = false;
     }
 
+    /**
+     * Function that filters events depending on the selected period
+     */
     filteredEvents() {
         const today = moment();
 
@@ -71,7 +80,5 @@ export default class Sales extends Vue {
         else {
             return this.data
         }
-
     }
-
 }

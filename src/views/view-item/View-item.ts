@@ -1,10 +1,4 @@
 import { Component, Vue } from 'vue-property-decorator';
-import {
-  BeaconEvent,
-  defaultEventCallbacks,
-  NetworkType
-} from "@airgap/beacon-sdk";
-import { BeaconWallet } from "@taquito/beacon-wallet";
 
 import offers from "../../demo-data/offers.json"
 import info from "../../demo-data/types-info.json"
@@ -14,8 +8,8 @@ import dataUtils from "@/demo-data/utils"
 import { ContractAbstraction, TezosToolkit, Wallet } from "@taquito/taquito"
 import { namespace } from 'vuex-class'
 import Navigation from '@/components/navigation/Navigation.vue';
+import { TempleWallet } from '@temple-wallet/dapp';
 
-const contract = namespace('contract')
 const user = namespace('user')
 
 const Tezos = new TezosToolkit("https://edonet.smartpy.io")
@@ -44,24 +38,38 @@ export default class Buy extends Vue {
   public isPaymentInProcess = false;
   public isPaymentSuccessful = false;
   public paymentFailed = false;
+  public error = false;
+  public error_msg = ""
   public dataUtils = new dataUtils()
   
   @user.Action
   public updateRemoved!: (item: string) => void
 
-  private wallet = new BeaconWallet({
-    name: "Escrow DApp",
-    eventHandlers: {
-      // Overwrite standard behavior of certain events
-      [BeaconEvent.PAIR_INIT]: {
-        handler: async (syncInfo) => {
-          // Add standard behavior back (optional)
-          await defaultEventCallbacks.PAIR_INIT(syncInfo);
-          console.log("syncInfo", syncInfo);
-        },
-      },
-    },
-  });
+  
+  // Temple Wallet initialisation
+  private wallet = new TempleWallet("SmartLink Demo DApp");
+
+  /**
+  * Function that sets up the user waller and connects it to the DApp
+  */
+  async walletSetup() {
+    // Check if Temple wallet is available
+    const available = await TempleWallet.isAvailable();
+
+    if (!available) {
+      this.error = true;
+      this.error_msg += "The Temple wallet is not available. \n"
+      console.error("The Temple wallet is not available")
+    }
+
+    // Connect to Edo2 testnet
+    await this.wallet.connect('edo2net');
+
+    // Set the wallet provider to the Temple wallet
+    Tezos.setWalletProvider(this.wallet);
+
+  }
+
 
   async beforeMount() {
     if (typeof this.data !== 'undefined') {
@@ -93,7 +101,7 @@ export default class Buy extends Vue {
     this.isPaymentInProcess = true;
     Tezos.setWalletProvider(this.wallet);
     // Request permissions
-    await this.wallet.client.requestPermissions({ network: { type: NetworkType.EDONET } })
+    await this.walletSetup()
       .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress))
       .then((contract) =>{
         console.log(action_to_perform)

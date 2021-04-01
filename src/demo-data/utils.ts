@@ -4,7 +4,7 @@ export default class dataUtils {
     public states:any = states;
 
     async updateDefaultData(data: any, commission: number, slashing_rate:number) {
-        let fees = data.shipping + data.price * ((slashing_rate / 100) + (commission / 100))
+        let fees = data.price * ((slashing_rate / 100) + (commission / 100))
         Object.assign(data, {
             state: this.states['default_'+data.type],
             commission: commission,

@@ -75,11 +75,19 @@
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
                   <br />
                   <span class="fees"
-                    >(Fees: {{ item.fees }}
+                    >Fees: {{ item.fees }}
                     <img
                       :src="require(`../../assets/tezos.png`)"
                       width="6px"
-                    />)</span
+                    /></span
+                  >
+                  <br />
+                  <span class="fees"
+                    >Shipping: {{ item.shipping }}
+                    <img
+                      :src="require(`../../assets/tezos.png`)"
+                      width="6px"
+                    /></span
                   >
                 </td>
                 <td class="text-center">
