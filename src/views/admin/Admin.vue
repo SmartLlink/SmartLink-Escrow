@@ -15,11 +15,7 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <v-skeleton-loader
-          v-if="loadTable"
-          class="mx-auto"
-          type="table"
-        >
+        <v-skeleton-loader v-if="loadTable" class="mx-auto" type="table">
         </v-skeleton-loader>
         <section class="items" v-if="!loadTable">
           <h1 class="title">Transfers awaiting confirmation</h1>
@@ -52,7 +48,7 @@
                 </td>
                 <td class="text-center">{{ item.buyer }}</td>
                 <td class="text-center">
-                  {{ item.paid_price.escrow/1000000 }}
+                  {{ item.paid_price.escrow / 1000000 }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
                 </td>
                 <td class="text-center">
@@ -66,10 +62,7 @@
                     Confirm transfer
                   </v-btn>
                   <div class="loading" v-if="item.confirmation">
-                    <v-progress-circular
-                      indeterminate
-                      color="primary"
-                    >
+                    <v-progress-circular indeterminate color="primary">
                     </v-progress-circular>
                     <span class="subtitle-1"> Sending transaction...</span>
                   </div>
@@ -83,30 +76,31 @@
           <table>
             <thead>
               <tr>
-                <th v-for="header in commissions_headers" :key="header" class="text-center">
+                <th
+                  v-for="header in commissions_headers"
+                  :key="header"
+                  class="text-center"
+                >
                   {{ header }}
                 </th>
               </tr>
             </thead>
             <tbody>
-               <tr>
+              <tr>
+                <td class="text-center">Global slashing Rate</td>
                 <td class="text-center">
-                 Global slashing Rate
+                  {{ this.$store.state.contract.slashingRate }}
                 </td>
-                <td class="text-center">{{ this.$store.state.contract.slashingRate }}</td> 
               </tr>
               <tr v-for="item in commissions" :key="item.id">
+                <td class="text-center">{{ info[item[0]].name }} commission</td>
                 <td class="text-center">
-                  {{ info[item[0]].name }} commission
-                </td>
-                <td class="text-center">
-                 {{ item[1] }}
+                  {{ item[1] }}
                 </td>
               </tr>
             </tbody>
           </table>
         </section>
-
       </v-container>
     </v-main>
   </v-app>

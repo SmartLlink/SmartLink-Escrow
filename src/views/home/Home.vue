@@ -45,12 +45,7 @@
                       </div>
                     </div>
                     <div class="text-center">
-                      <v-btn
-                        depressed
-                        color="white"
-                        rounded
-                        @click="step++"
-                      >
+                      <v-btn depressed color="white" rounded @click="step++">
                         <v-icon left>mdi-information</v-icon> More information
                       </v-btn>
                     </div>
@@ -63,8 +58,8 @@
                       <hr />
                       <p>
                         In order to fully experience all the SmartLink demo
-                        features, you need to originate the demo contract.
-                        The origination may take a minute.
+                        features, you need to originate the demo contract. The
+                        origination may take a minute.
                       </p>
                       <br />
                       <div class="text-center">
@@ -102,16 +97,14 @@
                         </div>
                       </div>
                     </section>
-                    <v-alert
-                      v-model="error"
-                      dismissible
-                      type="error"
-                    >
+                    <v-alert v-model="error" dismissible type="error">
                       {{ error_msg }}
                     </v-alert>
 
                     <section class="category">
-                      <h4 class="title">Already have a SmartLink contract? Run it!</h4>
+                      <h4 class="title">
+                        Already have a SmartLink contract? Run it!
+                      </h4>
                       <hr />
                       <p>
                         If you have previously originated a SmartLink Escrow
@@ -144,13 +137,15 @@
                             indeterminate
                             color="primary"
                           ></v-progress-circular>
-                          <span class="subtitle-1">Loading contract information...</span>
+                          <span class="subtitle-1"
+                            >Loading contract information...</span
+                          >
                         </div>
                       </div>
                     </section>
                   </v-card-text>
                 </v-col>
-              </v-row>                
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
