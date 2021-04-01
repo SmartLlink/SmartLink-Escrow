@@ -14,28 +14,28 @@ import dataUtils from "../../demo-data/utils"
 
 @Component({
     components: {
-      Navigation
+        Navigation
     },
-  })
+})
 export default class Sales extends Vue {
     // Display data
-    public drawer = true;
-    public loadTable = true;
+    public drawer: boolean = true;
+    public loadTable: boolean = true;
 
     // Table and filters data
     public period: string | null = "";
-    public headers = ["Product", "Seller", "Total", ""];
+    public headers: Array<String> = ["Product", "Seller", "Total", ""];
 
     // Smart-contract variables
-    public slashing_rate = this.$store.state.contract.slashingRate
+    public slashing_rate: number = this.$store.state.contract.slashingRate
     public storage: any;
 
     // Data
     public data = offers;
-    
+
     // Util variables
-    public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
-    public dataUtils = new dataUtils();
+    public contractUtils: contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
+    public dataUtils: dataUtils = new dataUtils();
 
     /**
      * Function that loads the data from the test data and the smart contract storage
@@ -44,7 +44,7 @@ export default class Sales extends Vue {
         // Get the exchanges map
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
         // Get all the sold items that are not in the exchanges map of the smart contract
-        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="sale")
+        this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type === "sale")
 
         // Get the commission and update the data object
         this.data.map((data) => {

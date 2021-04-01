@@ -8,10 +8,10 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Admin pannel</v-toolbar-title>
       <v-spacer></v-spacer>
-      <span class="running-contract"
-        >Running contract:
-        <code>{{ this.$store.state.contract.contractAddress }}</code></span
-      >
+      <span class="running-contract">
+        Running contract:
+        <code>{{ this.$store.state.contract.contractAddress }}</code>
+      </span>
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -19,7 +19,8 @@
           v-if="loadTable"
           class="mx-auto"
           type="table"
-        ></v-skeleton-loader>
+        >
+        </v-skeleton-loader>
         <section class="items" v-if="!loadTable">
           <h1 class="title">Transfers awaiting confirmation</h1>
           This will be an automated process ... .
@@ -42,16 +43,14 @@
                         width="55px"
                       />
                     </v-col>
-                    <v-col cols="auto"
-                      ><span class="name">{{ item.name }}</span
-                      ><br /><span class="date"
-                        >Last update on {{ item.update }}</span
-                      ></v-col
-                    ></v-row
-                  >
+                    <v-col cols="auto">
+                      <span class="name">{{ item.name }}</span>
+                      <br />
+                      <span class="date">Last update on {{ item.update }}</span>
+                    </v-col>
+                  </v-row>
                 </td>
                 <td class="text-center">{{ item.buyer }}</td>
-
                 <td class="text-center">
                   {{ item.paid_price.escrow/1000000 }}
                   <img :src="require(`../../assets/tezos.png`)" width="10px" />
@@ -70,79 +69,15 @@
                     <v-progress-circular
                       indeterminate
                       color="primary"
-                    ></v-progress-circular
-                    ><span class="subtitle-1"> Sending transaction...</span>
+                    >
+                    </v-progress-circular>
+                    <span class="subtitle-1"> Sending transaction...</span>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </section>
-
-       <!--  <v-skeleton-loader
-          v-if="loadTable"
-          class="mx-auto"
-          type="table"
-        ></v-skeleton-loader>
-        <section class="items" v-if="!loadTable">
-          <h1 class="title">Exchanges waiting for validation</h1>
-
-          <table>
-            <thead>
-              <tr>
-                <th v-for="header in headers" :key="header" class="text-center">
-                  {{ header }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in itemsWaitingForValidation" :key="item.id">
-                <td>
-                  <v-row align="center">
-                    <v-col cols="auto">
-                      <img
-                        :src="require(`../../assets/${item.picture}`)"
-                        aspect-ratio="1"
-                        width="55px"
-                      />
-                    </v-col>
-                    <v-col cols="auto"
-                      ><span class="name">{{ item.name }}</span
-                      ><br /><span class="date"
-                        >Last update on {{ item.update }}</span
-                      ></v-col
-                    ></v-row
-                  >
-                </td>
-                <td class="text-center">{{ item.buyer }}</td>
-
-                <td class="text-center">
-                  {{ item.total }}
-                  <img :src="require(`../../assets/tezos.png`)" width="10px" />
-                </td>
-                <td class="text-center">
-                  <v-btn
-                    v-if="!item.confirmation"
-                    depressed
-                    color="main"
-                    class="buy"
-                    @click="validateExchange(item.id)"
-                  >
-                    Validate exchange
-                  </v-btn>
-                  <div class="loading" v-if="item.confirmation">
-                    <v-progress-circular
-                      indeterminate
-                      color="primary"
-                    ></v-progress-circular
-                    ><span class="subtitle-1"> Sending transaction...</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section> -->
-        
         <section class="items">
           <h1 class="title">Exchange information</h1>
           <table>
@@ -158,8 +93,7 @@
                 <td class="text-center">
                  Global slashing Rate
                 </td>
-                <td class="text-center">{{ this.$store.state.contract.slashingRate }}</td>
-                
+                <td class="text-center">{{ this.$store.state.contract.slashingRate }}</td> 
               </tr>
               <tr v-for="item in commissions" :key="item.id">
                 <td class="text-center">
@@ -168,7 +102,6 @@
                 <td class="text-center">
                  {{ item[1] }}
                 </td>
-                
               </tr>
             </tbody>
           </table>

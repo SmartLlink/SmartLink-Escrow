@@ -22,7 +22,7 @@ const Tezos = new TezosToolkit("https://edonet.smartpy.io") // RPC of our choice
 export default class Sales extends Vue {
   // Booleans for the display
   public drawer: boolean = true; // Open or close the navigation side bar
-  public loadTable = true;
+  public loadTable: boolean = true;
 
   // Data
   public data = offers;
@@ -30,20 +30,20 @@ export default class Sales extends Vue {
   public itemsWaitingForTransfer: any = {}
 
   // Utils
-  public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
-  
+  public contractUtils: contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
+
   // Smart-contract storage variables
   public storage: any;
   public commissions = new Map();
 
   // Tables data
-  public headers = ["Item", "Buyer", "Escrowed amount", ""]
-  public commissions_headers = ["Variable", "Percentage"]
-  
+  public headers: Array<String> = ["Item", "Buyer", "Escrowed amount", ""]
+  public commissions_headers: Array<String> = ["Variable", "Percentage"]
+
   // Display data
-  public error:boolean = false;
-  public error_msg:string = "";
-  
+  public error: boolean = false;
+  public error_msg: string = "";
+
   // Temple Wallet initialisation
   private wallet = new TempleWallet("SmartLink Demo DApp");
 
@@ -92,7 +92,7 @@ export default class Sales extends Vue {
   */
   getItems(state: string) {
     const itemsInfo = this.contractUtils.getMap(this.storage, 'exchanges')
-    let data = this.data.filter(data => (Array.from(itemsInfo.keys()).includes(data.id))?itemsInfo.get(data.id).state === state:false)
+    let data = this.data.filter(data => (Array.from(itemsInfo.keys()).includes(data.id)) ? itemsInfo.get(data.id).state === state : false)
     data.map(data => Object.assign(data, itemsInfo.get(data.id), { confirmation: false }));
     return data;
 
@@ -130,8 +130,8 @@ export default class Sales extends Vue {
       .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress)) // Query the contract
       // Call the desired entrypoint
       .then((contract) => contract.methods.validateSellerTransmission(
-          id
-        )
+        id
+      )
       )
       .then((transaction) => transaction.send()) // Send the transaction
       .then((operation) => operation.confirmation()) // Get the confirmation of the transaction
@@ -145,5 +145,5 @@ export default class Sales extends Vue {
         this.itemsWaitingForTransfer = this.setConfirmation(this.itemsWaitingForTransfer, id, false)
       })
   }
-  
+
 }

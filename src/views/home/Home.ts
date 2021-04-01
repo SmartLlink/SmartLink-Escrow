@@ -26,18 +26,18 @@ export default class Home extends Vue {
   }
 
   // VueJs display variables
-  public error_msg:string = "" // Error message to display if needed
+  public error_msg: string = "" // Error message to display if needed
 
   // Display booleans
-  public originating:boolean = false; // Displays the loader during the contract origination
-  public originatingCompleted:boolean= false; // Displays the contract address and the Go to Demo button once the origination is done and is successfull
-  public error:boolean = false; // Displays an error if there is no Temple wallet installed
-  public loadingContract:boolean= false;
+  public originating: boolean = false; // Displays the loader during the contract origination
+  public originatingCompleted: boolean = false; // Displays the contract address and the Go to Demo button once the origination is done and is successfull
+  public error: boolean = false; // Displays an error if there is no Temple wallet installed
+  public loadingContract: boolean = false;
 
   // smart contract interaction
   public address: string | null = ""; // Tezos address of the user
-  public contractAddress:string = "" // Address of the contract
-  public slashing_rate:number;
+  public contractAddress: string = "" // Address of the contract
+  public slashing_rate: number;
 
   // Data
   public nbOffers: number = data.filter((data) => data.type === "offer").length;
@@ -61,9 +61,9 @@ export default class Home extends Vue {
   // Temple Wallet initialisation
   private wallet = new TempleWallet("SmartLink Demo DApp");
 
-   /**
-   * Function that sets up the user waller and connects it to the DApp
-   */
+  /**
+  * Function that sets up the user waller and connects it to the DApp
+  */
   async walletSetup() {
     // Check if Temple wallet is available
     const available = await TempleWallet.isAvailable();
@@ -84,12 +84,11 @@ export default class Home extends Vue {
     // Get the wallet address
     this.wallet.getPKH()
       .then((address) => this.address = address)
-      .catch((error) => 
-        {
-          this.error = true;
-          this.error_msg = "Could not retrieve the public address from Temple Wallet \n"
-          console.error(this.error_msg, error)
-        })
+      .catch((error) => {
+        this.error = true;
+        this.error_msg = "Could not retrieve the public address from Temple Wallet \n"
+        console.error(this.error_msg, error)
+      })
 
   }
 
@@ -129,51 +128,48 @@ export default class Home extends Vue {
   async originateContract() {
     // Set up the wallet
     this.walletSetup()
-    // Send the origination transaction
-    .then( () => {
-      this.originating = true;
-      return Tezos.wallet.originate({
-        code: contractCode,
-        init: this.initContractStorage(this.address!)
+      // Send the origination transaction
+      .then(() => {
+        this.originating = true;
+        return Tezos.wallet.originate({
+          code: contractCode,
+          init: this.initContractStorage(this.address!)
+        })
+          .send()
       })
-      .send()
-    })
 
-    // Get the originated contract
-    .then ((originationOp)  => 
-    {
-      return originationOp.contract();
-    })
+      // Get the originated contract
+      .then((originationOp) => {
+        return originationOp.contract();
+      })
 
-    // Get the contract address and update the local storage
-    .then((contract) =>  
-    {
-      this.contractAddress = contract.address
-      this.updateLocalStorage()
-    })
+      // Get the contract address and update the local storage
+      .then((contract) => {
+        this.contractAddress = contract.address
+        this.updateLocalStorage()
+      })
 
-    // Update the item info and end the origination
-    .then(() => {
-      this.updateItemsInfo();
-      this.originating = false;
-      this.originatingCompleted = true;
-    })
+      // Update the item info and end the origination
+      .then(() => {
+        this.updateItemsInfo();
+        this.originating = false;
+        this.originatingCompleted = true;
+      })
 
-    // Catch errors if any
-    .catch((error) => {
-      this.originating = false;
-      this.error_msg = "There was a problem with the contract origination, please try again. \n"
-      console.error(this.error_msg, error)
-    })
+      // Catch errors if any
+      .catch((error) => {
+        this.originating = false;
+        this.error_msg = "There was a problem with the contract origination, please try again. \n"
+        console.error(this.error_msg, error)
+      })
   }
 
   /**
    * Function that updates the offers local storage
    */
-  updateItemsInfo()
-  {
+  updateItemsInfo() {
     this.updateNumberOfItems(this.nbOffers);
-      
+
     // Reset past local storage information
     this.updateResetRemoved();
     this.updateResetViewed();
@@ -182,15 +178,14 @@ export default class Home extends Vue {
   /**
    * Function that updates the contract local storage
    */
-  async updateLocalStorage()
-  {
+  async updateLocalStorage() {
     const cutils = new contractUtils(this.contractAddress)
     const storage = await cutils.getContractStorage()
 
     this.slashing_rate = cutils.getSlashingRate(storage)
     this.updateContract(this.contractAddress)
     this.updateSlashingRate(this.slashing_rate)
-   }
+  }
 
   /**
    * Function that runs a given contract address if it exists
@@ -199,19 +194,16 @@ export default class Home extends Vue {
     this.checkLocalStorage()
     this.loadingContract = true;
     await this.updateLocalStorage()
-    .then(()=> {
-      this.$router.push('marketplace')
-    })
-    .catch((error) => 
-      {
+      .then(() => {
+        this.$router.push('marketplace')
+      })
+      .catch((error) => {
         this.loadingContract = false;
         this.error = true;
         this.error_msg = "Could not access the contract storage. The contract address might be wrong or not exist. \n"
         console.error(this.error_msg, error)
       }
-    ) 
-    
-
+      )
   }
 
 
@@ -223,13 +215,13 @@ export default class Home extends Vue {
     const user = (localStorage.getItem('vuex') !== null && typeof localStorage.getItem('vuex') !== undefined) ? JSON.parse(localStorage.getItem('vuex')!).user : null;
     // Check if the user exists, if it exists retrive the numberOfItems from the user object, else return null
     const nbOfItems = ((user !== null) && (typeof user !== undefined)) ? user.numberOfItems : null
-   
-    // Check if there is a vuex local storage: if it exists, retrieve the contract object, else return null
-    const contract = (localStorage.getItem('vuex') !== null && typeof localStorage.getItem('vuex') !== undefined)?JSON.parse(localStorage.getItem('vuex')!).contract:null;
-    // Check if the contract exists, if it exists retrive the contractAddress from the contract object, else return null
-    const contractAddress = (contract !== null && typeof contract !== undefined)?contract.contractAddress:null;
 
-    if (!(contractAddress===this.contractAddress && nbOfItems !== null && typeof nbOfItems !== undefined )) {
+    // Check if there is a vuex local storage: if it exists, retrieve the contract object, else return null
+    const contract = (localStorage.getItem('vuex') !== null && typeof localStorage.getItem('vuex') !== undefined) ? JSON.parse(localStorage.getItem('vuex')!).contract : null;
+    // Check if the contract exists, if it exists retrive the contractAddress from the contract object, else return null
+    const contractAddress = (contract !== null && typeof contract !== undefined) ? contract.contractAddress : null;
+
+    if (!(contractAddress === this.contractAddress && nbOfItems !== null && typeof nbOfItems !== undefined)) {
       // Update the number of items to default
       this.updateItemsInfo();
     }
