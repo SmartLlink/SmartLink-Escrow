@@ -1,38 +1,45 @@
+// Vue
 import { Component, Vue } from 'vue-property-decorator';
+
+// Taquito (smart contract interactions)
 import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from '@temple-wallet/dapp';
+
+// Utils
 import contractCode from "../../contract/Escrow-contract.json"
 import contractUtils from "../../contract/utils"
 
+// Data stores
+import data from "../../demo-data/offers.json"
 import { namespace } from 'vuex-class'
+
 const contract = namespace('contract')
 const user = namespace('user')
 
-import data from "../../demo-data/offers.json"
-const Tezos = new TezosToolkit('https://edonet.smartpy.io')
+const Tezos = new TezosToolkit('https://edonet.smartpy.io') // Connecting to Edo2 testnet RPC
 
 @Component
 export default class Home extends Vue {
 
   public wallets = {
-    1: "https://airgap.it/",
-    2: "https://cryptonomic.tech/galleon.html",
-    3: "https://wallet.kukai.app/",
-    4: "https://www.ledger.com/",
-    5: "https://spirewallet.com/",
-    6: "https://templewallet.com/"
+    1: "https://templewallet.com/"
   }
 
-  public step = 1;
+  // VueJs display variables
+  public step = 1; // Displays the information pannel or the origination pannel
 
-  public originating = false;
+  // Display booleans
+  public originating = false; // Displays the loader during the contract origination
+  public originatingCompleted = false; // Displays the contract address and the Go to Demo button once the origination is done and is successfull
+  public walletAvailable = true; // Displays an error if there is no Temple wallet installed
 
-  public originatingCompleted = false;
+  public address: string | null = ""; // Tezos address of the user
+  public contractAddress = "" // Address of the contract
 
-  public address: string | null = "";
+  // Data
   public offers: any[] = data.filter((data) => data.type === "offer");;
 
-  public contractAddress = ""
+  // Setters; set contract and user data in the local storage
   @contract.Action
   public updateContract!: (contractAddress: string) => void
 
@@ -47,20 +54,34 @@ export default class Home extends Vue {
 
   @user.Action
   public updateResetViewed!: () => void
-
+  
+  // Temple Wallet initialisation
   private wallet =  new TempleWallet("SmartLink Demo DApp");
 
-  async originateContract() {
-    // Request permissions
+  async walletSetup(){
+    // Check if Temple wallet is available
     const available = await TempleWallet.isAvailable();
     
     if (!available) {
+      this.walletAvailable = false;
       throw new Error("Temple Wallet not installed");
     }
-    await this.wallet.connect('edo2net');
     
+    // Connect to Edo2 testnet
+    await this.wallet.connect('edo2net');
+
+    // Set the wallet provider to the Temple wallet
     Tezos.setWalletProvider(this.wallet);
-   
+
+    // Retrieve user's wallet
+    this.address = await this.wallet.getPKH()
+  }
+  
+
+  async originateContract() {
+    // Set the wallet
+    await this.walletSetup();
+
     const originationOp = await Tezos.wallet
       .originate({
         code: contractCode,
