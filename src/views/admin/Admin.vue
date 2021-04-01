@@ -31,7 +31,7 @@
                 </th>
               </tr>
             </thead>
-            <tbody :key="render">
+            <tbody>
               <tr v-for="item in itemsWaitingForTransfer" :key="item.id">
                 <td>
                   <v-row align="center">

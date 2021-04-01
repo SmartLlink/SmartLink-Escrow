@@ -1,15 +1,10 @@
 import { Component, Vue } from 'vue-property-decorator';
-import {
-  BeaconEvent,
-  defaultEventCallbacks,
-  NetworkType
-} from "@airgap/beacon-sdk";
 import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
+import { TempleWallet } from '@temple-wallet/dapp';
 import contractCode from "../../contract/Escrow-contract.json"
-import { namespace } from 'vuex-class'
 import contractUtils from "../../contract/utils"
 
+import { namespace } from 'vuex-class'
 const contract = namespace('contract')
 const user = namespace('user')
 
@@ -48,30 +43,24 @@ export default class Home extends Vue {
   public updateNumberOfItems!: (numberOfItems: number) => void
 
   @user.Action
-  public updateResetRemoved!: ()  => void
-  
-  @user.Action
-  public updateResetViewed!: ()  => void
+  public updateResetRemoved!: () => void
 
-  private wallet = new BeaconWallet({
-    name: "Escrow DApp",
-    eventHandlers: {
-      // Overwrite standard behavior of certain events
-      [BeaconEvent.PAIR_INIT]: {
-        handler: async (syncInfo) => {
-          // Add standard behavior back (optional)
-          await defaultEventCallbacks.PAIR_INIT(syncInfo);
-          console.log("syncInfo", syncInfo);
-        },
-      },
-    },
-  });
+  @user.Action
+  public updateResetViewed!: () => void
+
+  private wallet =  new TempleWallet("SmartLink Demo DApp");
 
   async originateContract() {
-    Tezos.setWalletProvider(this.wallet);
     // Request permissions
-    const permission = await this.wallet.client.requestPermissions({ network: { type: NetworkType.EDONET } });
-    this.address = permission.address;
+    const available = await TempleWallet.isAvailable();
+    
+    if (!available) {
+      throw new Error("Temple Wallet not installed");
+    }
+    await this.wallet.connect('edo2net');
+    
+    Tezos.setWalletProvider(this.wallet);
+   
     const originationOp = await Tezos.wallet
       .originate({
         code: contractCode,
@@ -130,7 +119,7 @@ export default class Home extends Vue {
     const user = (localStorage.getItem('vuex') !== null && typeof localStorage.getItem('vuex') !== undefined) ? JSON.parse(localStorage.getItem('vuex')!).user : null;
     const nbOfItems = ((user !== null) && (typeof user !== undefined)) ? user.numberOfItems : null
     if (nbOfItems === null || typeof nbOfItems === undefined) {
-      this.updateNumberOfItems(nbOffers);    
+      this.updateNumberOfItems(nbOffers);
     }
 
   }

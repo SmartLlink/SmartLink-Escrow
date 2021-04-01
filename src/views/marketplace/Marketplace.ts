@@ -1,17 +1,17 @@
+// Vue
 import { Component, Vue } from 'vue-property-decorator';
+import Navigation from '@/components/navigation/Navigation.vue';
+
+// Dates
+import moment from "moment"
+
+// Data
 import offers from "../../demo-data/offers.json"
 import states from "../../demo-data/states.json"
 
+// Utils
 import contractUtils from "../../contract/utils"
 import dataUtils from "../../demo-data/utils"
-
-import { TezosToolkit } from "@taquito/taquito"
-import moment from "moment"
-import { namespace } from 'vuex-class'
-import Navigation from '@/components/navigation/Navigation.vue';
-
-const contract = namespace('contract')
-const Tezos = new TezosToolkit("https://edonet.smartpy.io")
 
 @Component({
     components: {
@@ -19,57 +19,33 @@ const Tezos = new TezosToolkit("https://edonet.smartpy.io")
     },
   })
 export default class Sales extends Vue {
-
+    // Display data
     public drawer = true;
-
-    public slashing_rate = this.$store.state.contract.slashingRate
+    public error = false;
     public loadTable = true;
+    public period: string | null = "";
+    public headers = ["Product", "Seller", "Total", ""];
+
+    // Smart-contract variables
+    public slashing_rate = this.$store.state.contract.slashingRate
+    public storage: any;
+    public commissions_temp = new Map()
+
+    // Data
     public data = offers;
     public states: any = states;
-    public error = false;
-    public headers = ["Product", "Seller", "Total", ""];
-    public period: string | null = "";
-    public commissions_temp = new Map()
+    
+    // Util variables
     public contractUtils = new contractUtils(this.$store.state.contract.contractAddress)
     public dataUtils = new dataUtils();
-    public storage: any;
 
-    getCommission(data_type: string) {
-        let commission = 0;
-
-        // get commission; we're using a temp object to avoid querying the contract too many times
-        if (this.commissions_temp.has(data_type)) {
-            commission = this.commissions_temp.get(data_type)
-        }
-        else {
-            commission = this.contractUtils.getCommission(this.storage, data_type);
-            this.commissions_temp.set(data_type, commission)
-        }
-
-        return commission;
-
-    }
-
-/*     loadData() {
-        const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
-        this.data.map(async (data) => {
-            if (exchanges.has(data.id)) {
-                const exchange = exchanges.get(data.id)
-                this.dataUtils.updateDataWithExchange(data, exchange)
-            }
-            else {
-                const commission = await this.getCommission(data.escrow_type)
-                this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
-            }
-        })
-    }
- */
     loadData() {
         const exchanges = this.contractUtils.getMap(this.storage, "exchanges")
         this.data = this.data.filter((data) => !exchanges.has(data.id) && data.type==="sale")
         console.log(this.data)
         this.data.map((data) => {
-            const commission = this.getCommission(data.escrow_type)
+            //const commission = this.getCommission(data.escrow_type)
+            const commission = this.contractUtils.getCommission(this.storage, data.escrow_type)
             this.dataUtils.updateDefaultData(data, commission, this.slashing_rate)
         })
     }

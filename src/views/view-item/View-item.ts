@@ -95,10 +95,13 @@ export default class Buy extends Vue {
     // Request permissions
     await this.wallet.client.requestPermissions({ network: { type: NetworkType.EDONET } })
       .then(() => Tezos.wallet.at(this.$store.state.contract.contractAddress))
-      .then((contract) =>
-         this.addNewExchange(contract)
+      .then((contract) =>{
+        console.log(action_to_perform)
+         if(action_to_perform==="init-escrow") return this.addNewExchange(contract)
+         else if(action_to_perform==="validate") return this.validateExchange(contract)
+        }
         )
-      .then((transaction) => transaction.send({ amount: this.data!.total }))
+      .then((transaction) => transaction!.send({ amount: this.data!.total }))
       .then((operation) => operation.confirmation())
       .then(() => {
         this.isPaymentSuccessful = true;
@@ -130,7 +133,6 @@ export default class Buy extends Vue {
 
   removeItem(id:string)
   {
-    console.log('blel')
     if(!this.$store.state.user.removed.includes(id)) this.updateRemoved(id);
   }
 
