@@ -19,7 +19,15 @@
         </v-skeleton-loader>
         <section class="items" v-if="!loadTable">
           <h1 class="title">Transfers awaiting confirmation</h1>
-          This will be an automated process ... .
+          <v-alert
+            border="left"
+            dismissible
+            text
+            type="info"
+          >
+            The admin pannel allows you to validate manually any item transfer you bought. 
+            The transfer validation will be automated in the final version of SmartLink.
+          </v-alert>
           <table>
             <thead>
               <tr>

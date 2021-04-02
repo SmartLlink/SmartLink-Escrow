@@ -32,6 +32,28 @@
                 {{ data.state.action.required}}
           </section>
           <br v-else />
+          <v-alert
+            v-if="data.state.name==='shipped'"
+            border="left"
+            text
+            type="info"
+          >
+            <v-row align="center">
+              <v-col class="grow">
+                The transfer validation will be automated in the final version of SmartLink. In order for the demo to be tested quickly without any "Transfer Waiting" frustrating time, the transfer validation has to be made manually. 
+              </v-col>
+              <v-col class="shrink">
+                <v-btn 
+                  depressed
+                  :to="{name:'admin'}"
+                  color="primary"
+                  small
+                >
+                  Validate Transfer
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-alert>
           <v-row justify="space-between">
             <v-col
               lg="8"
