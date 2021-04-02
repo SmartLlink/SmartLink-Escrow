@@ -149,6 +149,7 @@ export default class Sales extends Vue {
       })
       .catch((error) => {
         console.log(error)
+        this.error_msg = error.message
         this.itemsWaitingForTransfer = this.setConfirmation(this.itemsWaitingForTransfer, id, false)
       })
   }

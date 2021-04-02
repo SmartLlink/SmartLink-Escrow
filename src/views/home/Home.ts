@@ -166,7 +166,8 @@ export default class Home extends Vue {
       // Catch errors if any
       .catch((error) => {
         this.originating = false;
-        this.error_msg = "There was a problem with the contract origination, please try again. \n"
+        this.error = true;
+        this.error_msg = error.message
         console.error(this.error_msg, error)
       })
   }

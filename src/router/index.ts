@@ -7,6 +7,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '@/views/home/Home.vue';
+import NotFound from '@/components/notfound/Not-Found.vue'
 
 Vue.use(VueRouter);
 
@@ -59,7 +60,9 @@ const routes: RouteConfig[] = [
     name: 'marketplace',
     component: () => import(/* webpackChunkName: "about" */ '@/views/marketplace/Marketplace.vue'), 
     props: true
-  }
+  },
+  { path: '/404', component: NotFound },  
+  { path: '*', redirect: '/404' },  
 ];
 
 const router = new VueRouter({

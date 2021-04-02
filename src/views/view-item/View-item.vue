@@ -127,22 +127,7 @@
                 </v-row>
               </section>
             </v-col>
-          </v-row>
-         <!--  <section class="navigation-buttons">
-            <v-row align="center" justify="space-between">
-              <v-col cols="auto">
-                <v-btn depressed color="back" rounded :href="`/sales/`">
-                  <v-icon left>mdi-chevron-left-circle</v-icon> Back
-                </v-btn>
-              </v-col>
-              <v-col cols="auto">
-                <v-btn depressed color="forward" v-if="data.state.action.name" rounded @click="buy">
-                  {{data.state.action.name}} <v-icon right>mdi-chevron-right-circle</v-icon></v-btn
-                >
-              </v-col>
-            </v-row>
-          </section> -->
-         
+          </v-row>         
          <section class="navigation-buttons text-right">  <v-btn 
                     depressed
                     rounded
@@ -159,7 +144,9 @@
                 >
                 </section>
         </div>
-        <div v-if="!isItemAvailable & loaded">Error msg // put that later</div>
+        <v-alert v-if="!isItemAvailable & loaded" type="error">
+          404: The requested item does not exist
+        </v-alert>
         <div
           v-if="isPaymentInProcess && !paymentFailed && !isPaymentSuccessful"
           class="text-center items"
@@ -173,6 +160,9 @@
             {{this.data.state.progress}}
           </v-progress-circular>
         </div>
+        <v-alert type ="error" dismissible v-if="paymentFailed || error">
+          {{ error_msg }}
+        </v-alert>
         <div v-if="paymentFailed" class="items text-center">
            <v-icon
               :size="125"
