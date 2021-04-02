@@ -129,7 +129,8 @@ export default class Buy extends Vue {
       this.data!.escrow_type,
       this.data!.id,
       this.data!.price * 1000000,
-      this.data!.seller
+      this.data!.seller,
+      this.data!.shipping*1000000
     )
   }
 

@@ -15,19 +15,20 @@ export default class dataUtils {
             state: this.states['default_'+data.type],
             commission: commission,
             slashing: slashing_rate,
-            total: data.price + fees,
+            total: data.price + fees + data.shipping,
             fees: fees.toFixed(2)
         })
     }
 
     updateDataWithExchange(data: any, exchange:any) {
         data.date = exchange.lastUpdate
+        data.shipping = exchange.total_escrow.shipping/1000000
         Object.assign(data, {
             state: this.states[exchange.state],
-            commission: exchange.paid_price.commission/1000000,
-            slashing: exchange.paid_price.slashing/1000000,
-            total: exchange.paid_price.escrow/1000000,
-            fees: (data.shipping + exchange.paid_price.slashing/1000000 + exchange.paid_price.commission/1000000).toFixed(2)
+            commission: exchange.total_escrow.commission/1000000,
+            slashing: exchange.total_escrow.slashing/1000000,
+            total: exchange.total_escrow.escrow/1000000,
+            fees: (exchange.total_escrow.slashing/1000000 + exchange.total_escrow.commission/1000000).toFixed(2)
         })
     }
     

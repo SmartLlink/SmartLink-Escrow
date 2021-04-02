@@ -112,19 +112,19 @@ export default class Home extends Vue {
           "prim": "Pair",
           "args": [
             [
-              { "prim": "Elt", "args": [{ "int": "0" }, { "string": "WAITING_FOR_TRANSFER" }] },
-              { "prim": "Elt", "args": [{ "int": "1" }, { "string": "WAITING_FOR_VALIDATION" }] },
-              { "prim": "Elt", "args": [{ "int": "2" }, { "string": "VALIDATED" }] },
-              { "prim": "Elt", "args": [{ "int": "3" }, { "string": "CANCELLED" }] }
+              { "prim": "Elt", "args": [ { "int": "0" }, { "string": "WAITING_FOR_TRANSFER" } ] },
+              { "prim": "Elt", "args": [ { "int": "1" }, { "string": "WAITING_FOR_VALIDATION" } ] },
+              { "prim": "Elt", "args": [ { "int": "2" }, { "string": "VALIDATED" } ] },
+              { "prim": "Elt", "args": [ { "int": "3" }, { "string": "CANCELLED" } ] }
             ],
             [
-              { "prim": "Elt", "args": [{ "string": "DOMAIN_NAME" }, { "int": "3" }] },
-              { "prim": "Elt", "args": [{ "string": "OBJECT" }, { "int": "2" }] },
-              { "prim": "Elt", "args": [{ "string": "OTHER" }, { "int": "1" }] }
+              { "prim": "Elt", "args": [ { "string": "DOMAIN_NAME" }, { "int": "3" } ] },
+              { "prim": "Elt", "args": [ { "string": "OBJECT" }, { "int": "2" } ] },
+              { "prim": "Elt", "args": [ { "string": "OTHER" }, { "int": "1" } ] }
             ]
           ]
         },
-        { "prim": "Pair", "args": [[], { "prim": "Pair", "args": [{ "string": address }, { "int": "1" }] }] }
+        { "prim": "Pair", "args": [ [], { "prim": "Pair", "args": [ { "string": this.address }, { "int": "1" } ] } ] }
       ]
     }
   }

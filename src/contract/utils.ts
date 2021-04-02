@@ -42,7 +42,7 @@ export default class contractUtils {
     * @returns {number} - smart contract's slashing rate
     */
     public getCommission(storage: any, escrow_type: string) {
-        const commission = storage.escrow_types.get(escrow_type);
+        const commission = storage.exchange_types.get(escrow_type);
         return commission.toNumber();
     }
 

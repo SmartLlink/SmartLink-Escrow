@@ -58,7 +58,7 @@
                       <span class="name">{{ item.name }}</span>
                       <br />
                       <span class="date">
-                        Last update:
+                        Posted:
                         {{ new Date(item.date).toLocaleString() }}
                       </span>
                     </v-col>

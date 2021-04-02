@@ -88,7 +88,7 @@ export default class Sales extends Vue {
     */
   async loadItems() {
     this.storage = await this.contractUtils.getContractStorage(); // Get smart-contract storage
-    this.commissions = this.contractUtils.getMap(this.storage, "escrow_types") // Get all the commissions
+    this.commissions = this.contractUtils.getMap(this.storage, "exchange_types") // Get all the commissions
     this.itemsWaitingForTransfer = this.getItems("WAITING_FOR_TRANSFER") // Build the object with items waiting for transfer
   }
 
