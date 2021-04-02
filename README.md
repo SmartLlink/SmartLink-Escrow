@@ -1,34 +1,31 @@
-## SmartLink demo with Vuetify & Typescript
 [WIP]
+## Project title
+A little info about your project and/ or overview that explains **what** the project is about.
 
-### Usage
+## Motivation
+A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
+ 
+## Screenshots
+Include logo/demo screenshot etc.
 
-__Clone this repo__
-```
-git clone -b develop https://github.com/Smart-Chain-git/SmartLink-Escrow.git
-```
+## Tech/framework used
+Ex. -
 
-__Install deps__
-```
-npm install
-```
+<b>Built with</b>
+- [VueJS](https://)
 
-__Compiles and hot-reloads for development__
-```
-npm run serve
-```
+## Features
+What makes your project stand out?
 
-_
+## Installation
+Provide step by step series of examples and explanations about how to get a development env running.
 
-[c:1]: https://vuejs.org/
-[c:2]: https://cli.vuejs.org/guide/
-[c:3]: https://github.com/vuejs/vue-class-component
-[c:4]: https://github.com/ktsn/vuex-class
-[c:5]: https://router.vuejs.org/
-[c:6]: https://www.typescriptlang.org/
-[c:7]: https://vuetifyjs.com/en/
-[c:8]: https://yarnpkg.com/
-[c:9]: https://jestjs.io/
-[c:10]: https://vue-test-utils.vuejs.org/
-[c:11]: https://www.cypress.io/
-[c:12]: https://eslint.org/
+## API Reference
+
+Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+
+## How to use?
+If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project..
+
+## Credits
+Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project. 
