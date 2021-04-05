@@ -84,8 +84,6 @@ The URLs may vary depending on the ports available on your computer.
 ## API Reference
 Link to the demo
 
-## How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project..
 
 ## Credits
 Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project. 
