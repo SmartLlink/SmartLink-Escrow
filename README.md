@@ -1,11 +1,9 @@
-# SmartLink Demo Testnet
-A little info about your project and/ or overview that explains **what** the project is about.
+![GitHub Logo](https://token.smartlink.so/wp-content/uploads/2021/04/Logo-HD-1.png)
 
-## Motivation
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
- 
-## Screenshots
-Include logo/demo screenshot etc.
+
+# Overview
+Smartlink is building a decentralized escrow payment system on Tezos coupled with marketplace functionalities for Web 3.0. 
+Here you'll find the current demo of the Smartlink platform. This initial version aims to set the basis for escrow payments and basic transactions.
 
 ## Framework used
 <b>Built with</b>
@@ -15,9 +13,6 @@ Include logo/demo screenshot etc.
 - [TypeScript](https://www.typescriptlang.org/)
 - [Taquito](https://tezostaquito.io/)
 - [Temple Wallet](https://templewallet.com/)
-
-## Features
-What makes your project stand out?
 
 ## Local installation
 ### Install Temple Wallet
@@ -71,18 +66,15 @@ It will create the directory node_modules  containing all the installed modules 
 ``` bash 
 npm run serve
 ```
-Congrats, your project is up!
+Congrats, your project is up and running!
 
 ##### Open the project
-To open the project, you have two local URLs that you can access from your browser:
+To open the project, you may use the two local URLs which you can access from your browser:
 - Local:   http://localhost:8080/ 
 - Network: http://192.168.0.33:8080/
 
 The URLs may vary depending on the ports available on your computer.
 
-## API Reference
-Link to the demo
-
-
-## Credits
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project. 
+## Contributing 
+We appreciate all types of contributions from anyone! The tiniest adjustments will sometimes make a huge difference. Please have a look around. 
+Feel free to ask questions on our [Telegram](https://t.me/smartlinkofficial), or submit a GitHub pull request.
