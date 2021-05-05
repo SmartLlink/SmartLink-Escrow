@@ -1,3 +1,10 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Discord][discord-shield]][discord-url]
+[![Telegram][telegram-shield]][telegram-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+[![Twitter][twitter-shield]][twitter-url]
+[![Reddit][reddit-shield]][reddit-url]
 ![GitHub Logo](https://token.smartlink.so/wp-content/uploads/2021/04/Logo-HD-1.png)
 
 
@@ -74,7 +81,34 @@ To open the project, you may use the two local URLs which you can access from yo
 - Network: http://192.168.0.33:8080/
 
 The URLs may vary depending on the ports available on your computer.
+##### Test the project
+###### Home
+![home](https://ipfs.io/ipfs/Qmd1q8kxZmrqeZYQyp68QTuyL1fAPH21NuuyjuMJfR7xB5)
+
+MarketPlace                                                                          |  Offers
+:-----------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:
+![marketplace](https://ipfs.io/ipfs/QmRfVmL5PuFHutsafEBcfMnZ59AAXTZpkkpSHKT2WK1hKj)  |  ![offers](https://ipfs.io/ipfs/QmbRxnZyEcEZkURqc25j2jdSNwBKZM9HP9MzdHcvwfS53x)|
+ 
+ Tracking                                                                            |  Admin
+:-----------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------:
+![tracking](https://ipfs.io/ipfs/QmQ9cmeSqK73Y9APQEivXFbHCL5svvQGeLTgwtoFGJ9rTq)     | ![marketplace](https://ipfs.io/ipfs/QmUWqrQ3EJsPGHFtbYu2PbvA7G3UUNsxjWR2ofr8QqTvMY)|
 
 ## Contributing 
 We appreciate all types of contributions from anyone! The tiniest adjustments will sometimes make a huge difference. Please have a look around. 
 Feel free to ask questions on our [Telegram](https://t.me/smartlinkofficial), or submit a GitHub pull request.
+
+
+[contributors-shield]: https://img.shields.io/github/contributors/SmartLlink/Smartlink-Escrow.svg?style=for-the-badge
+[contributors-url]: https://github.com/SmartLlink/Smartlink-Escrow/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/SmartLlink/Smartlink-Escrow.svg?style=for-the-badge
+[forks-url]: https://github.com/SmartLlink/Smartlink-Escrow/network/members
+[telegram-url]: https://t.me/smartlinkofficial
+[telegram-shield]: https://img.shields.io/badge/-Telegram-black.svg?style=for-the-badge&logo=Telegram&colorB=555
+[linkedin-url]: https://www.linkedin.com/company/smartlinkso
+[linkedin-shield]: https://img.shields.io/badge/-Linkedin-black.svg?style=for-the-badge&logo=Linkedin&colorB=555
+[discord-shield]: https://img.shields.io/badge/-Discord-black.svg?style=for-the-badge&logo=discord&colorB=555
+[discord-url]:https://discord.gg/Rut5xxqGWQ
+[twitter-shield]: https://img.shields.io/badge/-Twitter-black.svg?style=for-the-badge&logo=twitter&colorB=555
+[twitter-url]:https://twitter.com/smartlinkHQ
+[reddit-shield]: https://img.shields.io/badge/-reddit-black.svg?style=for-the-badge&logo=reddit&colorB=555
+[reddit-url]:https://www.reddit.com/user/Teamsmartlink/
