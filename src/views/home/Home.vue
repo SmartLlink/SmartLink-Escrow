@@ -41,7 +41,7 @@
                     <div class="subitems">
                       <div class="subitems-title">
                         <v-icon left color="white">mdi-account-check</v-icon>
-                        <span class="subtitle-1">Tezos Delphinet account</span>
+                        <span class="subtitle-1">Tezos Edonet account</span>
                       </div>
                     </div>
                     <div class="text-center">
