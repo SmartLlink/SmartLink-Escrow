@@ -98,10 +98,10 @@ We appreciate all types of contributions from anyone! The tiniest adjustments wi
 Feel free to ask questions on our [Telegram](https://t.me/smartlinkofficial), or submit a GitHub pull request.
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/SmartLlink/Smartlink-Escrow.svg?style=for-the-badge
-[contributors-url]: https://github.com/SmartLlink/Smartlink-Escrow/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/SmartLlink/Smartlink-Escrow.svg?style=for-the-badge
-[forks-url]: https://github.com/SmartLlink/Smartlink-Escrow/network/members
+[contributors-shield]: https://img.shields.io/github/contributors/Smartlinkhub/Smartlink-Escrow.svg?style=for-the-badge
+[contributors-url]: https://github.com/Smartlinkhub/Smartlink-Escrow/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Smartlinkhub/Smartlink-Escrow.svg?style=for-the-badge
+[forks-url]: https://github.com/Smartlinkhub/Smartlink-Escrow/network/members
 [telegram-url]: https://t.me/smartlinkofficial
 [telegram-shield]: https://img.shields.io/badge/-Telegram-black.svg?style=for-the-badge&logo=Telegram&colorB=555
 [linkedin-url]: https://www.linkedin.com/company/smartlinkso
