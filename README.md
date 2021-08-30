@@ -5,7 +5,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Twitter][twitter-shield]][twitter-url]
 [![Reddit][reddit-shield]][reddit-url]
-![GitHub Logo](https://token.smartlink.so/wp-content/uploads/2021/04/Logo-HD-1.png)
+![GitHub Logo](https://gateway.pinata.cloud/ipfs/QmPUSnYbmWqueYbwaVdhgyim9Kfsq2MjwE7hNqdzq6RR2v)
 
 
 # Overview
